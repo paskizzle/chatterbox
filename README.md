@@ -1,4 +1,4 @@
-todoo
+ChatterBox
 =====
 
-Create tasks for yourself and for the classroom.
+An advanced chat room.
