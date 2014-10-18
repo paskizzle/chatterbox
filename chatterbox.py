@@ -39,6 +39,12 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render(template_values))
 
 
+def clean_input(val):
+    # TODO clean input here.
+
+    return val
+
+
 class Messages(webapp2.RequestHandler):
     def get(self):
         self.redirect('/')
@@ -47,13 +53,13 @@ class Messages(webapp2.RequestHandler):
         error_messages = []
         error_fields = []
 
-        name = self.request.get('name')
+        name = clean_input(self.request.get('name'))
         message = validator.name(name)
         if message:
             error_messages.append(message)
             error_fields.append('name')
 
-        content = self.request.get('content')
+        content = clean_input(self.request.get('content'))
         message = validator.content(content)
         if message:
             error_messages.append(message)
@@ -75,7 +81,6 @@ class Messages(webapp2.RequestHandler):
             message.content = content
             message.put()
             self.redirect('/')
-
 
 
 app = webapp2.WSGIApplication([
