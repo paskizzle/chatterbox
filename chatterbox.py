@@ -18,7 +18,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 
 class Message(ndb.Model):
-    author = ndb.TextProperty()
+    name = ndb.TextProperty()
     content = ndb.TextProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -49,11 +49,11 @@ class Messages(webapp2.RequestHandler):
         error_messages = []
         error_fields = []
 
-        author = self.request.get('author')
-        message = validator.author(author)
+        name = self.request.get('name')
+        message = validator.name(name)
         if message:
             error_messages.append(message)
-            error_fields.append('author')
+            error_fields.append('name')
 
         content = self.request.get('content')
         message = validator.content(content)
@@ -65,7 +65,7 @@ class Messages(webapp2.RequestHandler):
             template_values = {
                 'error_messages': error_messages,
                 'error_fields': error_fields,
-                'unsaved_message': {'author': author, 'content': content},
+                'unsaved_message': {'name': name, 'content': content},
                 'messages': get_messages()
             }
 
@@ -73,7 +73,7 @@ class Messages(webapp2.RequestHandler):
             self.response.write(template.render(template_values))
         else:
             message = Message(parent=chatterbox_key)
-            message.author = author
+            message.name = name
             message.content = content
             message.put()
             self.redirect('/')
