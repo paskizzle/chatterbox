@@ -1,7 +1,7 @@
 import re
 
 
-# Validates message author.
+# Validates message name.
 def name(val):
     if not val:
         return "Your name is required!"
